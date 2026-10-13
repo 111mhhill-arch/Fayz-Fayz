@@ -1,0 +1,104 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isMerchantOwner(merchantId) {
+      return isSignedIn() && (
+        resource.data.userId == request.auth.uid ||
+        request.resource.data.userId == request.auth.uid
+      );
+    }
+
+    // USERS COLLECTION
+    match /users/{userId} {
+      allow read: if isSignedIn();
+      allow create: if isOwner(userId) &&
+        request.resource.data.userId == userId &&
+        request.resource.data.role in ['USER', 'MERCHANT'] &&
+        request.resource.data.name is string &&
+        request.resource.data.email is string;
+      allow update: if isOwner(userId) &&
+        request.resource.data.userId == userId &&
+        // Prevent escalating role to ADMIN
+        (request.resource.data.role == resource.data.role || (resource.data.role == 'USER' && request.resource.data.role == 'MERCHANT'));
+      allow delete: if false;
+
+      // SUBCOLLECTIONS: favorites & wardrobe
+      match /favorites/{favoriteId} {
+        allow read: if isOwner(userId);
+        allow create, update: if isOwner(userId) &&
+          request.resource.data.userId == userId;
+        allow delete: if isOwner(userId);
+      }
+
+      match /wardrobe/{wardrobeItemId} {
+        allow read: if isOwner(userId);
+        allow create, update: if isOwner(userId) &&
+          request.resource.data.userId == userId;
+        allow delete: if isOwner(userId);
+      }
+    }
+
+    // MERCHANTS COLLECTION
+    match /merchants/{merchantId} {
+      // Anyone signed in can read approved merchants, merchant owner can read own
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() &&
+        request.resource.data.userId == request.auth.uid &&
+        request.resource.data.status == 'PENDING' &&
+        request.resource.data.storeName is string;
+      allow update: if isSignedIn() &&
+        resource.data.userId == request.auth.uid &&
+        request.resource.data.userId == request.auth.uid;
+      allow delete: if false;
+    }
+
+    // PRODUCTS COLLECTION
+    match /products/{productId} {
+      // Users can read approved products. Merchants can read their own products.
+      allow read: if isSignedIn() && (
+        resource.data.status == 'APPROVED' ||
+        resource.data.merchantId == request.auth.uid ||
+        resource.data.userId == request.auth.uid
+      );
+      allow create: if isSignedIn() &&
+        request.resource.data.userId == request.auth.uid &&
+        request.resource.data.name is string &&
+        request.resource.data.price is number;
+      allow update: if isSignedIn() &&
+        (resource.data.userId == request.auth.uid || resource.data.merchantId == request.auth.uid) &&
+        request.resource.data.userId == resource.data.userId;
+      allow delete: if isSignedIn() &&
+        (resource.data.userId == request.auth.uid || resource.data.merchantId == request.auth.uid);
+    }
+
+    // ORDERS COLLECTION
+    match /orders/{orderId} {
+      allow read: if isSignedIn() && (
+        resource.data.userId == request.auth.uid ||
+        (resource.data.merchantIds is list && request.auth.uid in resource.data.merchantIds)
+      );
+      allow create: if isSignedIn() &&
+        request.resource.data.userId == request.auth.uid;
+      allow update: if isSignedIn() && (
+        resource.data.userId == request.auth.uid ||
+        (resource.data.merchantIds is list && request.auth.uid in resource.data.merchantIds)
+      );
+      allow delete: if false;
+
+      match /items/{orderItemId} {
+        allow read: if isSignedIn();
+        allow create: if isSignedIn();
+        allow update, delete: if false;
+      }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Stylek",
+  "description": "ستايلك - منصة أزياء وتسوق ذكية مع مستشار ذكاء اصطناعي وتحديد الميزانية",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

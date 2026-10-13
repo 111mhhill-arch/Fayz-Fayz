@@ -1,0 +1,185 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with style preferences and body measurements",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "role": { "type": "string", "enum": ["USER", "MERCHANT", "ADMIN"] },
+        "city": { "type": "string" },
+        "gender": { "type": "string", "enum": ["male", "female"] },
+        "age": { "type": "integer" },
+        "heightCm": { "type": "integer" },
+        "weightKg": { "type": "integer" },
+        "size": { "type": "string" },
+        "bodyShape": { "type": "string" },
+        "skinTone": { "type": "string" },
+        "styleType": { "type": "string" },
+        "favoriteColors": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "name", "email", "role"]
+    },
+    "Merchant": {
+      "title": "Merchant",
+      "description": "Merchant store information and status",
+      "type": "object",
+      "properties": {
+        "merchantId": { "type": "string" },
+        "userId": { "type": "string" },
+        "storeName": { "type": "string" },
+        "ownerName": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "city": { "type": "string" },
+        "address": { "type": "string" },
+        "storeType": { "type": "string" },
+        "description": { "type": "string" },
+        "logoUrl": { "type": "string" },
+        "bannerUrl": { "type": "string" },
+        "status": { "type": "string", "enum": ["PENDING", "APPROVED", "REJECTED", "SUSPENDED"] },
+        "followerCount": { "type": "integer" },
+        "rating": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["merchantId", "userId", "storeName", "phone", "city", "status"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Store fashion product",
+      "type": "object",
+      "properties": {
+        "productId": { "type": "string" },
+        "merchantId": { "type": "string" },
+        "storeName": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "category": { "type": "string" },
+        "gender": { "type": "string" },
+        "style": { "type": "string" },
+        "price": { "type": "number" },
+        "discountPrice": { "type": "number" },
+        "stockQuantity": { "type": "integer" },
+        "sizes": { "type": "string" },
+        "colors": { "type": "string" },
+        "city": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "status": { "type": "string", "enum": ["PENDING", "APPROVED", "REJECTED", "HIDDEN"] },
+        "salesCount": { "type": "integer" },
+        "rating": { "type": "number" },
+        "isFeatured": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["productId", "merchantId", "name", "category", "price", "status"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer purchase order",
+      "type": "object",
+      "properties": {
+        "orderId": { "type": "string" },
+        "orderNumber": { "type": "string" },
+        "userId": { "type": "string" },
+        "recipientName": { "type": "string" },
+        "phone": { "type": "string" },
+        "city": { "type": "string" },
+        "address": { "type": "string" },
+        "paymentMethod": { "type": "string" },
+        "status": { "type": "string", "enum": ["PENDING", "ACCEPTED", "PREPARING", "SHIPPED", "IN_TRANSIT", "DELIVERED", "CANCELLED"] },
+        "totalAmount": { "type": "number" },
+        "deliveryFee": { "type": "number" },
+        "discountAmount": { "type": "number" },
+        "notes": { "type": "string" },
+        "merchantIds": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["orderId", "userId", "recipientName", "phone", "city", "status", "totalAmount"]
+    },
+    "OrderItem": {
+      "title": "OrderItem",
+      "description": "Item belonging to an order",
+      "type": "object",
+      "properties": {
+        "orderItemId": { "type": "string" },
+        "orderId": { "type": "string" },
+        "productId": { "type": "string" },
+        "merchantId": { "type": "string" },
+        "productName": { "type": "string" },
+        "productPrice": { "type": "number" },
+        "quantity": { "type": "integer" },
+        "selectedSize": { "type": "string" },
+        "selectedColor": { "type": "string" },
+        "merchantAmount": { "type": "number" }
+      },
+      "required": ["orderItemId", "orderId", "productId", "merchantId", "quantity"]
+    },
+    "Favorite": {
+      "title": "Favorite",
+      "description": "User favorite product or store",
+      "type": "object",
+      "properties": {
+        "favoriteId": { "type": "string" },
+        "userId": { "type": "string" },
+        "targetType": { "type": "string", "enum": ["PRODUCT", "STORE"] },
+        "targetId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["favoriteId", "userId", "targetType", "targetId"]
+    },
+    "WardrobeItem": {
+      "title": "WardrobeItem",
+      "description": "User virtual wardrobe closet item",
+      "type": "object",
+      "properties": {
+        "wardrobeItemId": { "type": "string" },
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "color": { "type": "string" },
+        "style": { "type": "string" },
+        "notes": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["wardrobeItemId", "userId", "name", "category"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profile document indexed by Firebase Auth UID"
+    },
+    "/merchants/{merchantId}": {
+      "schema": { "$ref": "#/entities/Merchant" },
+      "description": "Stores and merchant profiles"
+    },
+    "/products/{productId}": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Fashion products catalog"
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "Customer purchase orders"
+    },
+    "/orders/{orderId}/items/{orderItemId}": {
+      "schema": { "$ref": "#/entities/OrderItem" },
+      "description": "Order items breakdown"
+    },
+    "/users/{userId}/favorites/{favoriteId}": {
+      "schema": { "$ref": "#/entities/Favorite" },
+      "description": "User favorites"
+    },
+    "/users/{userId}/wardrobe/{wardrobeItemId}": {
+      "schema": { "$ref": "#/entities/WardrobeItem" },
+      "description": "User digital wardrobe items"
+    }
+  }
+}

@@ -1,0 +1,492 @@
+package com.example.ui.localization
+
+import androidx.compose.runtime.compositionLocalOf
+
+enum class AppLanguage(val code: String, val displayName: String) {
+    ARABIC("ar", "العربية"),
+    TURKISH("tr", "Türkçe")
+}
+
+val LocalAppLanguage = compositionLocalOf { AppLanguage.ARABIC }
+
+object AppStrings {
+    fun get(key: String, language: AppLanguage): String {
+        val ar = arMap[key] ?: key
+        if (language == AppLanguage.TURKISH) {
+            return trMap[key] ?: ar
+        }
+        return ar
+    }
+
+    private val arMap = mapOf(
+        // General & Brand
+        "app_name" to "ستايلك",
+        "app_slogan" to "مستشارك للأزياء",
+        "welcome_desc" to "اكتشف ستايلك، حدد ميزانيتك، وخلي ستايلك يهتم بالباقي.",
+        "login" to "تسجيل الدخول",
+        "register" to "إنشاء حساب جديد",
+        "user_account" to "مستخدم عادي",
+        "merchant_account" to "تاجر / صاحب متجر",
+        "admin_portal" to "النظام الداخلي للإدارة",
+        "name" to "الاسم الكامل",
+        "phone" to "رقم الهاتف",
+        "email" to "البريد الإلكتروني (اختياري)",
+        "password" to "كلمة المرور",
+        "confirm_password" to "تأكيد كلمة المرور",
+        "city" to "المدينة / المحافظة",
+        "gender" to "الجنس",
+        "age" to "العمر",
+        "save" to "حفظ",
+        "cancel" to "إلغاء",
+        "delete" to "حذف",
+        "edit" to "تعديل",
+        "confirm" to "تأكيد",
+        "submit" to "إرسال",
+        "back" to "رجوع",
+        "search" to "بحث عن منتجات، ماركات، متاجر...",
+        "currency" to "د.ع",
+        "iqd" to "دينار عراقي",
+
+        // Genders
+        "male" to "رجالي",
+        "female" to "نسائي",
+        "unisex" to "للجنسين",
+        "kids" to "أطفال",
+
+        // Categories
+        "cat_men" to "رجال",
+        "cat_women" to "نساء",
+        "cat_kids" to "أطفال",
+        "cat_shoes" to "أحذية",
+        "cat_bags" to "شنط",
+        "cat_watches" to "ساعات",
+        "cat_perfumes" to "عطور",
+        "cat_beauty" to "مستحضرات تجميل",
+        "cat_accessories" to "إكسسوارات",
+
+        // Navigation
+        "nav_home" to "الرئيسية",
+        "nav_search" to "البحث",
+        "nav_budget" to "الميزانية",
+        "nav_wardrobe" to "الخزانة",
+        "nav_profile" to "حسابي",
+        "nav_ai" to "Stylek AI",
+        "nav_cart" to "السلة",
+        "nav_orders" to "طلباتي",
+        "nav_favorites" to "المفضلة",
+
+        // Home
+        "featured_stores" to "المتاجر المميزة",
+        "latest_products" to "أحدث المنتجات",
+        "best_sellers" to "الأكثر مبيعاً",
+        "special_offers" to "عروض حصرية",
+        "recommended_for_you" to "مقترح لك خصيصاً",
+        "products_in_city" to "منتجات في مدينتك",
+        "view_all" to "عرض الكل",
+        "discount" to "خصم",
+        "add_to_cart" to "إضافة للسلة",
+        "buy_now" to "شراء الآن",
+
+        // Empty States
+        "empty_products" to "لا توجد منتجات حالياً",
+        "empty_orders" to "ليس لديك طلبات حتى الآن",
+        "empty_stores" to "لا توجد متاجر متاحة حالياً",
+        "empty_search" to "لم نجد ما تبحث عنه",
+        "empty_cart" to "سلة التسوق فارغة",
+        "empty_favorites" to "قائمة المفضلة فارغة",
+        "empty_wardrobe" to "خزانتك فارغة، أضف ملابسك لتحصل على تنسيقات ذكية",
+        "empty_offers" to "لا توجد عروض حالياً",
+
+        // Search & Filters
+        "filters" to "الفلاتر والتصفية",
+        "sort_by" to "الترتيب حسب",
+        "sort_relevance" to "الأكثر صلة",
+        "sort_price_low" to "الأقل سعراً",
+        "sort_price_high" to "الأعلى سعراً",
+        "sort_rating" to "الأعلى تقييماً",
+        "sort_newest" to "الأحدث",
+        "sort_bestselling" to "الأكثر مبيعاً",
+        "price_range" to "نطاق السعر",
+        "min_price" to "من",
+        "max_price" to "إلى",
+        "style_type" to "نوع الستايل",
+        "color" to "اللون",
+        "size" to "المقاس",
+        "clear_filters" to "إعادة ضبط",
+        "apply_filters" to "تطبيق الفلاتر",
+
+        // Styles
+        "style_casual" to "كاجوال (Casual)",
+        "style_formal" to "رسمي (Formal)",
+        "style_sport" to "رياضي (Sport)",
+        "style_luxury" to "فاخر (Luxury)",
+        "style_streetwear" to "ستريت وير (Streetwear)",
+        "style_classic" to "كلاسيك (Classic)",
+
+        // Budget Stylist
+        "budget_title" to "حدد ميزانيتك",
+        "budget_subtitle" to "أخبرنا بميزانيتك ومناسبتك وسننسق لك أفضل إطلالة بالكامل",
+        "budget_amount" to "الميزانية المتوفرة لديك",
+        "budget_occasion" to "المناسبة",
+        "budget_full_outfit" to "أريد إطلالة كاملة (قميص + بنطلون + حذاء + إكسسوار)",
+        "budget_find_btn" to "ابحث عن أفضل إطلالة ضمن الميزانية",
+        "budget_total_cost" to "المجموع الإجمالي",
+        "budget_remaining" to "المتبقي من الميزانية",
+        "budget_add_all" to "إضافة الإطلالة بالكامل إلى السلة",
+
+        // Occasions
+        "occasion_party" to "حفلة وسهرة",
+        "occasion_work" to "عمل ودوام",
+        "occasion_daily" to "يومي ومريح",
+        "occasion_wedding" to "زفاف ومناسبات خاصة",
+        "occasion_sport" to "رياضة ونشاط",
+
+        // Stylek AI
+        "ai_title" to "Stylek AI — مستشار الأزياء",
+        "ai_subtitle" to "اسأل الذكاء الاصطناعي عن تنسيقات واقعية من منتجات المتاجر ومحتويات خزانتك",
+        "ai_input_placeholder" to "اكتب طلبك... مثلاً: عندي حفلة وأريد ستايل رسمي بميزانية 150 ألف",
+        "ai_prompt_hint1" to "عندي حفلة وأريد ملابس رسمية بميزانية 150 ألف",
+        "ai_prompt_hint2" to "أريد ستايل كاجوال للصيف مريح وأنيق",
+        "ai_prompt_hint3" to "أريد ملابس وألوان تناسب لون بشرتي والستايل الفاخر",
+        "ai_send" to "إرسال",
+
+        // Wardrobe
+        "wardrobe_title" to "خزانة ملابسي",
+        "wardrobe_add_item" to "إضافة قطعة للملابس",
+        "wardrobe_item_name" to "اسم القطعة (مثال: بنطلون جينز أزرق)",
+        "wardrobe_ai_match" to "اقترح إطلالة من المتاجر تناسب هذه القطعة",
+
+        // Cart & Checkout
+        "cart_title" to "سلة المشتريات",
+        "subtotal" to "المجموع الفرعي",
+        "delivery_fee" to "أجور التوصيل",
+        "coupon_code" to "كود الخصم",
+        "apply_coupon" to "تطبيق الكود",
+        "total" to "الإجمالي النهائي",
+        "checkout_btn" to "متابعة إتمام الطلب",
+        "checkout_title" to "إتمام الطلب والشحن",
+        "recipient_name" to "اسم المستلم",
+        "recipient_phone" to "رقم الهاتف للتوصيل",
+        "recipient_address" to "العنوان بالتفصيل (الشارع / نقطة دالة)",
+        "delivery_notes" to "ملاحظات التوصيل (اختياري)",
+        "payment_method" to "طريقة الدفع",
+        "pay_cod" to "الدفع عند الاستلام (Cash on Delivery)",
+        "pay_zaincash" to "زين كاش (Zain Cash)",
+        "pay_qicard" to "بطاقة كي كارد (Qi Card)",
+        "place_order_btn" to "تأكيد الطلب الآن",
+        "order_success" to "تم استلام طلبك بنجاح!",
+
+        // Orders Status
+        "status_pending" to "بانتظار التأكيد",
+        "status_accepted" to "تم قبول الطلب",
+        "status_preparing" to "قيد التجهيز",
+        "status_shipped" to "تم الشحن",
+        "status_in_transit" to "في الطريق",
+        "status_delivered" to "تم التسليم",
+        "status_cancelled" to "ملغي",
+
+        // Merchant
+        "merchant_reg_title" to "تسجيل تاجر جديد",
+        "store_name" to "اسم المتجر",
+        "owner_name" to "اسم صاحب المتجر",
+        "store_type" to "نوع المتجر وتخصصه",
+        "store_address" to "عنوان المتجر الفعلي",
+        "merchant_pending_msg" to "حساب متجرك قيد المراجعة والاعتماد من قبل إدارة المنصة. ستتمكن من نشر المنتجات فور تفعيل حسابك.",
+        "merchant_dashboard" to "لوحة تحكم التاجر",
+        "merchant_sales" to "إجمالي المبيعات",
+        "merchant_orders_count" to "عدد الطلبات",
+        "merchant_products_count" to "المنتجات",
+        "merchant_low_stock" to "منتجات قاربت على النفاد",
+        "merchant_net_earnings" to "صافي الأرباح",
+        "add_product" to "إضافة منتج جديد",
+        "product_name" to "اسم المنتج",
+        "product_desc" to "وصف تفصيلي للمنتج",
+        "product_price" to "السعر الأصلي",
+        "product_discount_price" to "سعر الخصم (اختياري)",
+        "product_stock" to "الكمية المتوفرة بالمخزون",
+        "product_sizes" to "المقاسات المتاحة (مفصولة بفواصل e.g. S, M, L, XL)",
+        "product_colors" to "الألوان المتاحة (مفصولة بفواصل)",
+        "product_sku" to "رمز المنتج SKU",
+        "product_pending_notice" to "المنتج سينتقل لحالة بانتظار الموافقة ولن يظهر للمتسوقين حتى يعتمده مدير المنصة.",
+
+        // Admin
+        "admin_dashboard" to "لوحة تحكم الإدارة العامة",
+        "admin_total_users" to "إجمالي المستخدمين",
+        "admin_total_merchants" to "إجمالي التجار",
+        "admin_pending_merchants" to "تجار بانتظار الاعتماد",
+        "admin_pending_products" to "منتجات بانتظار الاعتماد",
+        "admin_total_orders" to "إجمالي الطلبات",
+        "admin_total_gmv" to "إجمالي قيمة المبيعات (GMV)",
+        "admin_platform_revenue" to "إيرادات المنصة من العمولات",
+        "admin_commission_rate" to "نسبة عمولة المنصة (%)",
+        "admin_commission_update" to "تحديث نسبة العمولة",
+        "admin_approve" to "اعتماد وموافقة",
+        "admin_reject" to "رفض",
+        "admin_suspend" to "تعليق الحساب",
+        "admin_activate" to "إعادة تفعيل",
+        "admin_users_management" to "إدارة المستخدمين",
+        "admin_merchants_management" to "إدارة المتاجر والتجار",
+        "admin_products_management" to "إدارة وتدقيق المنتجات",
+        "admin_orders_management" to "متابعة جميع الطلبات والعمولات",
+        "admin_banners_management" to "إدارة الإعلانات والبانرات",
+        "admin_reports" to "التقارير والإحصائيات",
+        "admin_logs" to "سجل العمليات الإدارية",
+
+        // Profile & Style
+        "profile_title" to "الملف الشخصي",
+        "style_profile_title" to "ملف الستايل الذكي (Style Profile)",
+        "height_cm" to "الطول (سم)",
+        "weight_kg" to "الوزن (كغ)",
+        "body_shape" to "شكل الجسم",
+        "skin_tone" to "لون البشرة",
+        "fav_colors" to "الألوان المفضلة",
+        "fav_style" to "الستايل المفضل",
+
+        // Settings
+        "settings_title" to "الإعدادات",
+        "language" to "اللغة / Dil",
+        "dark_mode" to "الوضع الليلي (Dark Mode)",
+        "notifications" to "الإشعارات",
+        "logout" to "تسجيل الخروج",
+        "out_of_stock" to "نفد من المخزون",
+        "in_stock" to "متوفر بالمخزون",
+        "follow_store" to "متابعة المتجر",
+        "following_store" to "تتابعه بالفعل"
+    )
+
+    private val trMap = mapOf(
+        // General & Brand
+        "app_name" to "Stylek",
+        "app_slogan" to "Moda Danışmanınız",
+        "welcome_desc" to "Stilinizi keşfedin, bütçenizi belirleyin, gerisini Stylek'e bırakın.",
+        "login" to "Giriş Yap",
+        "register" to "Yeni Hesap Oluştur",
+        "user_account" to "Bireysel Kullanıcı",
+        "merchant_account" to "Mağaza Sahibi / Satıcı",
+        "admin_portal" to "Dahili Yönetici Portalı",
+        "name" to "Ad Soyad",
+        "phone" to "Telefon Numarası",
+        "email" to "E-posta (İsteğe bağlı)",
+        "password" to "Şifre",
+        "confirm_password" to "Şifreyi Onayla",
+        "city" to "Şehir / İl",
+        "gender" to "Cinsiyet",
+        "age" to "Yaş",
+        "save" to "Kaydet",
+        "cancel" to "İptal",
+        "delete" to "Sil",
+        "edit" to "Düzenle",
+        "confirm" to "Onayla",
+        "submit" to "Gönder",
+        "back" to "Geri",
+        "search" to "Ürün, marka, mağaza ara...",
+        "currency" to "IQD",
+        "iqd" to "Irak Dinarı",
+
+        // Genders
+        "male" to "Erkek",
+        "female" to "Kadın",
+        "unisex" to "Unisex",
+        "kids" to "Çocuk",
+
+        // Categories
+        "cat_men" to "Erkek",
+        "cat_women" to "Kadın",
+        "cat_kids" to "Çocuk",
+        "cat_shoes" to "Ayakkabı",
+        "cat_bags" to "Çanta",
+        "cat_watches" to "Saat",
+        "cat_perfumes" to "Parfüm",
+        "cat_beauty" to "Kozmetik",
+        "cat_accessories" to "Aksesuar",
+
+        // Navigation
+        "nav_home" to "Ana Sayfa",
+        "nav_search" to "Arama",
+        "nav_budget" to "Bütçe",
+        "nav_wardrobe" to "Dolabım",
+        "nav_profile" to "Profilim",
+        "nav_ai" to "Stylek AI",
+        "nav_cart" to "Sepet",
+        "nav_orders" to "Siparişlerim",
+        "nav_favorites" to "Favoriler",
+
+        // Home
+        "featured_stores" to "Öne Çıkan Mağazalar",
+        "latest_products" to "En Yeni Ürünler",
+        "best_sellers" to "Çok Satanlar",
+        "special_offers" to "Özel Fırsatlar",
+        "recommended_for_you" to "Sizin İçin Önerilenler",
+        "products_in_city" to "Şehrinizdeki Ürünler",
+        "view_all" to "Tümünü Gör",
+        "discount" to "İndirim",
+        "add_to_cart" to "Sepete Ekle",
+        "buy_now" to "Hemen Al",
+
+        // Empty States
+        "empty_products" to "Şu anda ürün bulunmuyor",
+        "empty_orders" to "Henüz siparişiniz yok",
+        "empty_stores" to "Mevcut mağaza bulunamadı",
+        "empty_search" to "Aradığınız kriterlere uygun sonuç bulunamadı",
+        "empty_cart" to "Alışveriş sepetiniz boş",
+        "empty_favorites" to "Favori listeniz boş",
+        "empty_wardrobe" to "Dolabınız boş, akıllı kombinler için kıyafet ekleyin",
+        "empty_offers" to "Şu anda aktif kampanya yok",
+
+        // Search & Filters
+        "filters" to "Filtreler",
+        "sort_by" to "Sıralama",
+        "sort_relevance" to "En İlgili",
+        "sort_price_low" to "En Düşük Fiyat",
+        "sort_price_high" to "En Yüksek Fiyat",
+        "sort_rating" to "En Yüksek Puan",
+        "sort_newest" to "En Yeniler",
+        "sort_bestselling" to "En Çok Satanlar",
+        "price_range" to "Fiyat Aralığı",
+        "min_price" to "Min",
+        "max_price" to "Maks",
+        "style_type" to "Stil Türü",
+        "color" to "Renk",
+        "size" to "Beden",
+        "clear_filters" to "Temizle",
+        "apply_filters" to "Uygula",
+
+        // Styles
+        "style_casual" to "Günlük (Casual)",
+        "style_formal" to "Resmi (Formal)",
+        "style_sport" to "Spor (Sport)",
+        "style_luxury" to "Lüks (Luxury)",
+        "style_streetwear" to "Sokak Modası (Streetwear)",
+        "style_classic" to "Klasik (Classic)",
+
+        // Budget Stylist
+        "budget_title" to "Bütçeni Belirle",
+        "budget_subtitle" to "Bütçenizi ve etkinliğinizi söyleyin, size eksiksiz bir kombin hazırlayalım",
+        "budget_amount" to "Kullanılabilir Bütçeniz",
+        "budget_occasion" to "Etkinlik / Durum",
+        "budget_full_outfit" to "Tam Kombin İstiyorum (Gömlek + Pantolon + Ayakkabı + Aksesuar)",
+        "budget_find_btn" to "Bütçeme Uygun Kombinleri Bul",
+        "budget_total_cost" to "Toplam Tutar",
+        "budget_remaining" to "Kalan Bütçe",
+        "budget_add_all" to "Kombini Eksiksiz Sepete Ekle",
+
+        // Occasions
+        "occasion_party" to "Parti & Gece",
+        "occasion_work" to "İş & Ofis",
+        "occasion_daily" to "Günlük & Rahat",
+        "occasion_wedding" to "Düğün & Özel Gün",
+        "occasion_sport" to "Spor & Aktivite",
+
+        // Stylek AI
+        "ai_title" to "Stylek AI — Moda Danışmanı",
+        "ai_subtitle" to "Mağaza ürünleri ve dolabınızdaki parçalarla gerçekçi kombinler öneren yapay zeka",
+        "ai_input_placeholder" to "İsteğinizi yazın... Örn: 150 bin bütçeyle düğün için resmi kombin",
+        "ai_prompt_hint1" to "Parti için 150 bin bütçeyle resmi kıyafet öner",
+        "ai_prompt_hint2" to "Yaz için rahat ve şık casual bir stil",
+        "ai_prompt_hint3" to "Ten rengime ve lüks tarza uygun renkler ve kıyafetler",
+        "ai_send" to "Gönder",
+
+        // Wardrobe
+        "wardrobe_title" to "Kıyafet Dolabım",
+        "wardrobe_add_item" to "Parça Ekle",
+        "wardrobe_item_name" to "Parça Adı (Örn: Mavi Jean Pantolon)",
+        "wardrobe_ai_match" to "Bu parçaya uygun mağaza ürünleri öner",
+
+        // Cart & Checkout
+        "cart_title" to "Alışveriş Sepeti",
+        "subtotal" to "Ara Toplam",
+        "delivery_fee" to "Teslimat Ücreti",
+        "coupon_code" to "İndirim Kuponu",
+        "apply_coupon" to "Kuponu Uygula",
+        "total" to "Genel Toplam",
+        "checkout_btn" to "Siparişi Tamamla",
+        "checkout_title" to "Teslimat ve Ödeme",
+        "recipient_name" to "Alıcı Adı",
+        "recipient_phone" to "İletişim Telefonu",
+        "recipient_address" to "Açık Teslimat Adresi",
+        "delivery_notes" to "Teslimat Notları (İsteğe bağlı)",
+        "payment_method" to "Ödeme Yöntemi",
+        "pay_cod" to "Kapıda Nakit Ödeme (Cash on Delivery)",
+        "pay_zaincash" to "Zain Cash",
+        "pay_qicard" to "Qi Card",
+        "place_order_btn" to "Siparişi Onayla",
+        "order_success" to "Siparişiniz başarıyla alındı!",
+
+        // Orders Status
+        "status_pending" to "Onay Bekliyor",
+        "status_accepted" to "Sipariş Kabul Edildi",
+        "status_preparing" to "Hazırlanıyor",
+        "status_shipped" to "Kargoya Verildi",
+        "status_in_transit" to "Yolda",
+        "status_delivered" to "Teslim Edildi",
+        "status_cancelled" to "İptal Edildi",
+
+        // Merchant
+        "merchant_reg_title" to "Satıcı Kaydı",
+        "store_name" to "Mağaza Adı",
+        "owner_name" to "Yetkili Adı Soyadı",
+        "store_type" to "Mağaza Türü ve Uzmanlığı",
+        "store_address" to "Fiziksel Mağaza Adresi",
+        "merchant_pending_msg" to "Mağaza başvurunuz yönetici onayındadır. Onaylandıktan sonra ürün yayınlayabilirsiniz.",
+        "merchant_dashboard" to "Satıcı Paneli",
+        "merchant_sales" to "Toplam Satış",
+        "merchant_orders_count" to "Sipariş Sayısı",
+        "merchant_products_count" to "Ürünler",
+        "merchant_low_stock" to "Tükenmek Üzere Olanlar",
+        "merchant_net_earnings" to "Net Kazanç",
+        "add_product" to "Yeni Ürün Ekle",
+        "product_name" to "Ürün Adı",
+        "product_desc" to "Detaylı Ürün Açıklaması",
+        "product_price" to "Orijinal Fiyat",
+        "product_discount_price" to "İndirimli Fiyat (İsteğe bağlı)",
+        "product_stock" to "Stok Adedi",
+        "product_sizes" to "Mevcut Bedenler (Virgülle ayırın, örn: S, M, L)",
+        "product_colors" to "Mevcut Renkler (Virgülle ayırın)",
+        "product_sku" to "Ürün Kodu (SKU)",
+        "product_pending_notice" to "Ürün yönetici onayına gönderilecek ve onaylanmadan müşterilere görünmeyecektir.",
+
+        // Admin
+        "admin_dashboard" to "Genel Yönetim Paneli",
+        "admin_total_users" to "Toplam Kullanıcı",
+        "admin_total_merchants" to "Toplam Satıcı",
+        "admin_pending_merchants" to "Onay Bekleyen Satıcılar",
+        "admin_pending_products" to "Onay Bekleyen Ürünler",
+        "admin_total_orders" to "Toplam Sipariş",
+        "admin_total_gmv" to "Toplam Ticaret Hacmi (GMV)",
+        "admin_platform_revenue" to "Platform Komisyon Geliri",
+        "admin_commission_rate" to "Platform Komisyon Oranı (%)",
+        "admin_commission_update" to "Komisyon Oranını Güncelle",
+        "admin_approve" to "Onayla",
+        "admin_reject" to "Reddet",
+        "admin_suspend" to "Hesabı Askıya Al",
+        "admin_activate" to "Yeniden Aktifleştir",
+        "admin_users_management" to "Kullanıcı Yönetimi",
+        "admin_merchants_management" to "Mağaza & Satıcı Yönetimi",
+        "admin_products_management" to "Ürün Onay & Yönetimi",
+        "admin_orders_management" to "Sipariş ve Komisyon Takibi",
+        "admin_banners_management" to "Reklam ve Afiş Yönetimi",
+        "admin_reports" to "Raporlar ve İstatistikler",
+        "admin_logs" to "Yönetici İşlem Kayıtları",
+
+        // Profile & Style
+        "profile_title" to "Kullanıcı Profili",
+        "style_profile_title" to "Akıllı Stil Profili",
+        "height_cm" to "Boy (cm)",
+        "weight_kg" to "Kilo (kg)",
+        "body_shape" to "Vücut Tipi",
+        "skin_tone" to "Ten Rengi",
+        "fav_colors" to "Sevilen Renkler",
+        "fav_style" to "Tercih Edilen Stil",
+
+        // Settings
+        "settings_title" to "Ayarlar",
+        "language" to "Dil / اللغة",
+        "dark_mode" to "Karanlık Mod",
+        "notifications" to "Bildirimler",
+        "logout" to "Çıkış Yap",
+        "out_of_stock" to "Tükendi",
+        "in_stock" to "Stokta Var",
+        "follow_store" to "Mağazayı Takip Et",
+        "following_store" to "Takip Ediliyor"
+    )
+}
